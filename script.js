@@ -13,11 +13,13 @@ const downloadBtn = document.getElementById("download");
 const { body } = document;
 
 // Global Variables
-
+const canvas = document.createElement("canvas");
+canvas.id = "canvas";
+const context = canvas.getContext("2d");
 let currentSize = 10;
 let bucketColor = "#FFFFFF";
 let currentColor = "#A51DAB";
-// let isEraser = false;
+let isEraser = false; // the eraser will act as a brush but paint the canvas with the same background color that we have in that moment
 // let isMouseDown = false;
 // let drawnArray = [];
 
@@ -32,14 +34,17 @@ let currentColor = "#A51DAB";
 // });
 
 // Setting Brush Color
-// brushColorBtn.addEventListener('change', () => {
-
-// });
+brushColorBtn.addEventListener("change", () => {
+  currentColor = `#${brushColorBtn.value}`;
+  console.log(currentColor);
+});
 
 // Setting Background Color
-// bucketColorBtn.addEventListener('change', () => {
-
-// });
+bucketColorBtn.addEventListener("change", (event) => {
+  bucketColor = `#${bucketColorBtn.value}`;
+  // update the canvas when the user change the color
+  createCanvas();
+});
 
 // // Eraser
 // eraser.addEventListener('click', () => {
@@ -63,10 +68,10 @@ let currentColor = "#A51DAB";
 
 // Create Canvas
 function createCanvas() {
-  // canvas.width = ;
-  // canvas.height = ;
-  // context.fillStyle = ;
-  // context.fillRect();
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight - 50;
+  context.fillStyle = bucketColor;
+  context.fillRect(0, 0, canvas.width, canvas.height);
   body.appendChild(canvas);
 }
 
