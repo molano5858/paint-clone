@@ -11,6 +11,7 @@ const loadStorageBtn = document.getElementById("load-storage");
 const clearStorageBtn = document.getElementById("clear-storage");
 const downloadBtn = document.getElementById("download");
 const { body } = document;
+const brush_time = 1500;
 
 // Global Variables
 const canvas = document.createElement("canvas");
@@ -22,6 +23,11 @@ let currentColor = "#A51DAB";
 let isEraser = false; // the eraser will act as a brush but paint the canvas with the same background color that we have in that moment
 let isMouseDown = false; // to know when the user is doing a long click
 let drawnArray = [];
+
+// DRY - function dealy to switch brush
+function delayToSwitchToBrush(time) {
+  setTimeout(switchToBrush, time);
+}
 
 // Formatting Brush Size
 function displayBrushSize() {
@@ -91,7 +97,7 @@ clearCanvasBtn.addEventListener("click", () => {
   drawnArray = [];
   // Active Tool
   activeToolEl.textContent = "Canvas Cleared";
-  setTimeout(switchToBrush, 1500);
+  delayToSwitchToBrush(brush_time);
 });
 
 // Draw what is stored in DrawnArray
@@ -172,7 +178,7 @@ saveStorageBtn.addEventListener("click", () => {
   localStorage.setItem("savedCanvas", JSON.stringify(drawnArray));
   // Active Tool
   activeToolEl.textContent = "Canvas Saved";
-  setTimeout(switchToBrush, 1500);
+  delayToSwitchToBrush(brush_time);
 });
 
 // Load from Local Storage
@@ -182,25 +188,28 @@ loadStorageBtn.addEventListener("click", () => {
     restoreCanvas();
     // Active Tool
     activeToolEl.textContent = "Canvas Loaded";
-    setTimeout(switchToBrush, 1500);
+    delayToSwitchToBrush(brush_time);
   } else {
     activeToolEl.textContent = "There´s no saved canvas";
-    setTimeout(switchToBrush, 1500);
+    delayToSwitchToBrush(brush_time);
   }
 });
 
 // Clear Local Storage
 clearStorageBtn.addEventListener("click", () => {
+  localStorage.removeItem("savedCanvas");
   // Active Tool
   activeToolEl.textContent = "Local Storage Cleared";
-  setTimeout(switchToBrush, 1500);
+  delayToSwitchToBrush(brush_time);
 });
 
 // Download Image
 downloadBtn.addEventListener("click", () => {
+  downloadBtn.href = canvas.toDataURL("image/jpeg", 1);
+  downloadBtn.download = `paint-example.jpg`;
   // Active Tool
   activeToolEl.textContent = "Image File Saved";
-  setTimeout(switchToBrush, 1500);
+  delayToSwitchToBrush(brush_time);
 });
 
 // Event Listener
