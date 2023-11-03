@@ -49,6 +49,8 @@ bucketColorBtn.addEventListener("change", (event) => {
   bucketColor = `#${bucketColorBtn.value}`;
   // update the canvas when the user change the color
   createCanvas();
+  // when we change background color we need to repaint everything that we´ve done, that´s why call restoreCanvas()
+  restoreCanvas();
 });
 
 // // Eraser
@@ -83,14 +85,14 @@ function createCanvas() {
   switchToBrush();
 }
 
-// // Clear Canvas
-// clearCanvasBtn.addEventListener('click', () => {
-//   createCanvas();
-//   drawnArray = [];
-//   // Active Tool
-//   activeToolEl.textContent = 'Canvas Cleared';
-//   setTimeout(switchToBrush, 1500);
-// });
+// Clear Canvas
+clearCanvasBtn.addEventListener("click", () => {
+  createCanvas();
+  drawnArray = [];
+  // Active Tool
+  activeToolEl.textContent = "Canvas Cleared";
+  setTimeout(switchToBrush, 1500);
+});
 
 // Draw what is stored in DrawnArray
 function restoreCanvas() {
